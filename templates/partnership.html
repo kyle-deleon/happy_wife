@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="account_header">
+        <h1>Hello {{ session['name'] }}!</h1>
+    </div>
+   
+    {%for partner in partners%}
+    <p>My Partner</p>
+    <p><a href ="/partnership/{{partner['id']}}/{{partner['partner_id']}}">{{partner['first_name']}} {{partner['last_name']}}</a></p>
+    <br>
+    <p>Tasks</p>
+    <form action="/on_create_task/{{partner['id']}}/{{partner['partner_id']}}" method="POST">
+        <p>Description: <input type ="text" name="des"></p>
+        <p>Value: <input type ="number" name="val"></p>
+        <input type="submit" value="Build Work-Ethic">
+    </form> 
+    <br>
+    <p>Reward Store</p>
+    <form action="/on_create_task/{{partner['id']}}/{{partner['partner_id']}}" method="POST">
+        <p>Description: <input type ="text" name="des"></p>
+        <p>Value: <input type ="number" name="val"></p>
+        <input type="submit" value="Build Work-Ethic">
+    </form> 
+    {% endfor %}
+    {%for partnership in partnerships%}
+    <p>My Partner</p>
+    <p><a href ="/partnership/{{partnership['id']}}/{{partnership['user_id']}}">{{partnership['first_name']}} {{partnership['last_name']}}</a></p>
+    <br>
+    <p>Tasks</p>
+    <form action="/on_create_task/{{partnership['id']}}/{{partnership['user_id']}}" method="POST">
+        <p>Description: <input type ="text" name="des"></p>
+        <p>Value: <input type ="number" name="val"></p>
+        <input type="submit" value="Build Work-Ethic">
+    </form> 
+    <br>
+    <p>Reward Store</p>
+    <form action="/on_create_task/{{partnership['id']}}/{{partnership['user_id']}}" method="POST">
+        <p>Description: <input type ="text" name="des"></p>
+        <p>Value: <input type ="number" name="val"></p>
+        <input type="submit" value="Build Work-Ethic">
+    </form> 
+    {% endfor %}
+    <a href ="/on_logout">|logout|</a>
+    <a href ="/partners">|partners|</a>
+</body>
+</html>

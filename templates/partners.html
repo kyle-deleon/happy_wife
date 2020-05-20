@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/find_home.css') }}">
+</head>
+<body>
+    <div class = "wrapper">
+        <div class="roof">
+            <h1>Hello {{ session['name'] }}!</h1>
+        </div>
+        <div class="heading">
+            <h2>There's No Place Like Home</h2>
+        </div>
+        <div class="homes">
+            {% for user in users %}
+                <h4>{{user['first_name']}} {{user['last_name']}}<a href="/partner_click/{{user['id']}}">Connect</a></h4>
+            {% endfor %}
+        </div>
+        
+        <div class="bottom_links">
+            <a href ="/on_logout">|logout|</a>
+            <a href ="/account">home</a>
+        </div>
+    </div>
+</body>
+</html>
