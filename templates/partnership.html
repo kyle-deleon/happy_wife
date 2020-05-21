@@ -12,7 +12,7 @@
    
     {%for partner in partners%}
     <p>My Partner</p>
-    <p><a href ="/partnership/{{partner['id']}}/{{partner['partner_id']}}">{{partner['first_name']}} {{partner['last_name']}}</a></p>
+    <p><a href ="/partnership/{{partner['id']}}">{{partner['first_name']}} {{partner['last_name']}}</a></p>
     <br>
     <p>Tasks</p>
     <form action="/on_create_task/{{partner['id']}}/{{partner['partner_id']}}" method="POST">
@@ -46,7 +46,12 @@
         <input type="submit" value="Build Work-Ethic">
     </form> 
     {% endfor %}
+    <br>
+    {% for task in tasks %}
+    <h3>Tasks</h3>
+    <p>{{task['description']}} worth {{task['value']}} Wifey Points</p>
+    {%endfor%}
     <a href ="/on_logout">|logout|</a>
-    <a href ="/partners">|partners|</a>
+    <a href ="/account">|account|</a>
 </body>
 </html>

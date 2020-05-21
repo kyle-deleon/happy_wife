@@ -185,15 +185,22 @@ def account():
     data = {'sid':session['user_id']}
     mysql = connectToMySQL(schema)
     partners = mysql.query_db(query, data)
+
     query="SELECT * from partnerships JOIN users ON user_id = users.id WHERE partner_id = %(sid)s"
     data = {'sid':session['user_id']}
     mysql = connectToMySQL(schema)
     partnerships = mysql.query_db(query, data)
+    
+    query = " SELECT * FROM tasks where for_id = %(sid)s"
+    data = {'sid':session['user_id']}
+    mysql = connectToMySQL(schema)
+    tasks = mysql.query_db(query, data)
 
-    return render_template('account.html', partners = partners, partnerships = partnerships)
 
-@app.route('/partnership/<partnership_id>/<partner_id>')
-def partnership(partnership_id, partner_id):
+    return render_template('account.html', partners = partners, partnerships = partnerships, tasks=tasks)
+
+@app.route('/partnership/<partner_id>')
+def partnership(partner_id):
     if "user_id" not in session:
         return redirect('/')
 
@@ -201,12 +208,42 @@ def partnership(partnership_id, partner_id):
     data = {'sid':session['user_id']}
     mysql = connectToMySQL(schema)
     partners = mysql.query_db(query, data)
+
     query="SELECT * from partnerships JOIN users ON user_id = users.id WHERE partner_id = %(sid)s"
     data = {'sid':session['user_id']}
     mysql = connectToMySQL(schema)
     partnerships = mysql.query_db(query, data)
 
-    return render_template('partnership.html', partners = partners, partnerships = partnerships)
+    query = " SELECT * from tasks WHERE for_id = %(pid)s"
+    data = {'pid':partner_id}
+    mysql = connectToMySQL(schema)
+    tasks = mysql.query_db(query, data)
+
+    return render_template('partnership.html', partners = partners, partnerships = partnerships, tasks = tasks)
+
+@app.route("/on_create_task/<partnership_id>/<partner_id>", methods=['POST'])
+def create_task(partnership_id, partner_id):
+    is_valid = True
+    if len(request.form['des']) < 3:
+        is_valid = False
+        flash("A task must consist of at least 3 characters!")
+    if len(request.form['val']) < 1:
+        is_valid = False
+        flash("A task must be worth at least 1 Kid Coin!")
+    if is_valid:
+        query = "INSERT INTO tasks(partnership_id, created_by_id, for_id, description, value, task, completed, approved, created_at, updated_at) VALUES(%(par)s, %(uid)s, %(pid)s, %(des)s, %(val)s, true, false, false, NOW(), NOW())"
+        data = {
+            'par':partnership_id,
+            'uid':session['user_id'],
+            'pid':partner_id,
+            'des':request.form['des'],
+            'val':request.form['val']
+        }
+        mysql = connectToMySQL(schema)
+        mysql.query_db(query,data)
+        print(session['user_id'])
+        return redirect("/account")
+    return redirect('/home')
 
 if __name__ == "__main__":
     app.run(debug=True)
