@@ -19,10 +19,17 @@
         <p>My Partner</p>
         <p><a href ="/partnership/{{partner['partner_id']}}">{{partner['first_name']}} {{partner['last_name']}}</a></p>
         {%endfor%}
-        {% for task in tasks %}
+
+        {%for partnership in partnerships%}
+        <p>My Partner</p>
+        <p><a href ="/partnership/{{partnership['partner_id']}}">{{partnership['first_name']}} {{partnership['last_name']}}</a></p>
+        {%endfor%}
         <h3>My Tasks</h3>
+        {% for task in tasks %}
+        
         <p>{{task['description']}} worth {{task['value']}} Wifey Points</p>
         {%endfor%}
+        <h4><a href ="/rewards">Rewards Store</a></h4>
         <a href ="/on_logout">|logout|</a>
         <a href ="/partners">|partners|</a>
 </body>

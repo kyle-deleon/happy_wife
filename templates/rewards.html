@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello {{ session['name'] }}!</h1>
+    <h3>Rewards Store</h3>
+    {% for reward in rewards %}
+    <p>{{reward['description']}} worth {{reward['value']}} Wifey Points</p>
+    {%endfor%}
+    <a href ="/on_logout">|logout|</a>
+    <a href ="/account">|account|</a>
+</body>
+</html>

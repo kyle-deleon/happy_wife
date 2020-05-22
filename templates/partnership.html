@@ -7,12 +7,11 @@
 </head>
 <body>
     <div class="account_header">
-        <h1>Hello {{ session['name'] }}!</h1>
+        <h4>Hello {{ session['name'] }}!</h4>
     </div>
    
     {%for partner in partners%}
-    <p>My Partner</p>
-    <p><a href ="/partnership/{{partner['id']}}">{{partner['first_name']}} {{partner['last_name']}}</a></p>
+    <h1><a href ="/partnership/{{partner['id']}}">{{partner['first_name']}} {{partner['last_name']}}'s  Page</a></h1>
     <br>
     <p>Tasks</p>
     <form action="/on_create_task/{{partner['id']}}/{{partner['partner_id']}}" method="POST">
@@ -29,8 +28,8 @@
     </form> 
     {% endfor %}
     {%for partnership in partnerships%}
-    <p>My Partner</p>
-    <p><a href ="/partnership/{{partnership['id']}}/{{partnership['user_id']}}">{{partnership['first_name']}} {{partnership['last_name']}}</a></p>
+    
+    <h1><a href ="/partnership/{{partnership['id']}}/{{partnership['user_id']}}">{{partnership['first_name']}} {{partnership['last_name']}}'s  Page</a></h1>
     <br>
     <p>Tasks</p>
     <form action="/on_create_task/{{partnership['id']}}/{{partnership['user_id']}}" method="POST">
@@ -40,17 +39,23 @@
     </form> 
     <br>
     <p>Reward Store</p>
-    <form action="/on_create_task/{{partnership['id']}}/{{partnership['user_id']}}" method="POST">
+    <form action="/on_create_reward/{{partnership['id']}}/{{partnership['user_id']}}" method="POST">
         <p>Description: <input type ="text" name="des"></p>
         <p>Value: <input type ="number" name="val"></p>
         <input type="submit" value="Build Work-Ethic">
     </form> 
     {% endfor %}
     <br>
-    {% for task in tasks %}
+    
     <h3>Tasks</h3>
+    {% for task in tasks %}
     <p>{{task['description']}} worth {{task['value']}} Wifey Points</p>
     {%endfor%}
+
+    <h3>Rewards</h3>
+    {% for reward in rewards %}
+    <p>{{reward['description']}} worth {{reward['value']}} Wifey Points</p>
+    {% endfor %}
     <a href ="/on_logout">|logout|</a>
     <a href ="/account">|account|</a>
 </body>
