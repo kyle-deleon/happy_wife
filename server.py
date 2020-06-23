@@ -214,17 +214,17 @@ def partnership(partner_id):
     mysql = connectToMySQL(schema)
     partnerships = mysql.query_db(query, data)
 
-    query = " SELECT * from tasks WHERE for_id = %(pid)s AND task = true"
+    query = "SELECT * FROM tasks WHERE for_id = %(pid)s AND reward=TRUE"
+    data = {'pid': partner_id}
+    mysql = connectToMySQL(schema)
+    rewards = mysql.query_db(query, data)
+
+    query = "SELECT * FROM tasks WHERE for_id = %(pid)s AND task=TRUE"
     data = {'pid':partner_id}
     mysql = connectToMySQL(schema)
     tasks = mysql.query_db(query, data)
 
-    query = " SELECT * from tasks WHERE for_id = %(pid)s AND reward = true"
-    data = {'pid':partner_id}
-    mysql = connectToMySQL(schema)
-    rewards = mysql.query_db(query, data)
-
-    return render_template('partnership.html', partners = partners, partnerships = partnerships, tasks = tasks, rewards = rewards)
+    return render_template('partnership.html', partners = partners, partnerships = partnerships, rewards = rewards, tasks = tasks )
 
 @app.route("/on_create_task/<partnership_id>/<partner_id>", methods=['POST'])
 def create_task(partnership_id, partner_id):
@@ -236,7 +236,7 @@ def create_task(partnership_id, partner_id):
         is_valid = False
         flash("A task must be worth at least 1 Kid Coin!")
     if is_valid:
-        query = "INSERT INTO tasks(partnership_id, created_by_id, for_id, description, value, task, completed, approved, created_at, updated_at) VALUES(%(par)s, %(uid)s, %(pid)s, %(des)s, %(val)s, true, false, false, NOW(), NOW())"
+        query = "INSERT INTO tasks(partnership_id, created_by_id, for_id, description, value, task, reward, completed, approved, created_at, updated_at) VALUES(%(par)s, %(uid)s, %(pid)s, %(des)s, %(val)s, true, false, false, false, NOW(), NOW())"
         data = {
             'par':partnership_id,
             'uid':session['user_id'],
@@ -247,20 +247,20 @@ def create_task(partnership_id, partner_id):
         mysql = connectToMySQL(schema)
         mysql.query_db(query,data)
         print(session['user_id'])
-        return redirect("/account")
+        return redirect(f"/partnership/{partner_id}")
     return redirect('/home')
 
 @app.route("/on_create_reward/<partnership_id>/<partner_id>", methods=['POST'])
 def create_reward(partnership_id, partner_id):
     is_valid = True
-    if len(request.form['des']) < 3:
+    if len(request.form['des']) < 1:
         is_valid = False
-        flash("A task must consist of at least 3 characters!")
+        flash("A task must consist of at least 1 characters!")
     if len(request.form['val']) < 1:
         is_valid = False
         flash("A task must be worth at least 1 Kid Coin!")
     if is_valid:
-        query = "INSERT INTO tasks(partnership_id, created_by_id, for_id, description, value, reward, completed, approved, created_at, updated_at) VALUES(%(par)s, %(uid)s, %(pid)s, %(des)s, %(val)s, true, false, false, NOW(), NOW())"
+        query = "INSERT INTO tasks(partnership_id, created_by_id, for_id, description, value, task, reward, completed, approved, created_at, updated_at) VALUES(%(par)s, %(uid)s, %(pid)s, %(des)s, %(val)s, false, true, false, false, NOW(), NOW())"
         data = {
             'par':partnership_id,
             'uid':session['user_id'],
@@ -270,15 +270,15 @@ def create_reward(partnership_id, partner_id):
         }
         mysql = connectToMySQL(schema)
         mysql.query_db(query,data)
-        return redirect("/account")
-    return redirect('/home')
+        return redirect(f"/partnership/{partner_id}")
+    return redirect(f"/partnership/{partner_id}")
 
 @app.route("/rewards")
 def rewards_store():
     if "user_id" not in session:
         return redirect('/')
 
-    query = " SELECT * from tasks WHERE for_id = %(sid)s AND reward = true"
+    query = "SELECT * FROM tasks WHERE for_id= %(sid)s AND reward=true"
     data = {'sid':session['user_id']}
     mysql = connectToMySQL(schema)
     rewards = mysql.query_db(query, data)

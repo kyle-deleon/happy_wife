@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `happy_wife`.`users` (
   `updated_at` DATETIME NULL DEFAULT NULL,
   PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 7
+AUTO_INCREMENT = 11
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `happy_wife`.`partnerships` (
     FOREIGN KEY (`user_id`)
     REFERENCES `happy_wife`.`users` (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 7
 DEFAULT CHARACTER SET = utf8;
 
 
@@ -69,7 +69,7 @@ CREATE TABLE IF NOT EXISTS `happy_wife`.`tasks` (
   `created_by_id` INT NULL DEFAULT NULL,
   `description` VARCHAR(255) NULL DEFAULT NULL,
   `value` VARCHAR(255) NULL DEFAULT NULL,
-  `for_id` INT NULL,
+  `for_id` INT NULL DEFAULT NULL,
   `completed_by_id` INT NULL DEFAULT NULL,
   `completed` TINYINT(1) NULL DEFAULT NULL,
   `approved` TINYINT(1) NULL DEFAULT NULL,
@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `happy_wife`.`tasks` (
     FOREIGN KEY (`partnership_id`)
     REFERENCES `happy_wife`.`partnerships` (`id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 21
 DEFAULT CHARACTER SET = utf8;
 
 

@@ -1,5 +1,5 @@
 # Project: Happy Wife
-## Description: App where two users are connected as partners. Wife will be the admin and will post a task worth "wifey points", the partner will complete task and wait for approval from the admin to earn the amount of "points" that task was worth. Partner can then use points for special treatments such as night out with friends, watch the sports game, 30 min massage. 
+## Description: App where two users are connected as partners. partners will post tasks worth "wifey points", the partner will complete task and wait for approval from their spouse to earn the amount of "points" that task is worth. Partners can then use points for special treatments such as night out with friends, watch the sports game, 30 min massage. 
 
 ## Purpose of app is to help couples communicate their wants and needs.
  
@@ -22,5 +22,8 @@
     -search bar function to find partners place in database
     -monthly and yearly graphs
     -averages 
+
+##### Problems
+    -some rewards for some users shows up in tasks 
     
 
